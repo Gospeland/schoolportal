@@ -1,0 +1,16 @@
+{% extends 'baseportal.html' %}
+
+{% block content   %}
+<h3> All Applicants List </h3>
+ {% if  request.user.is_superuser  %}
+<div style='display: grid; grid-template-columns: 2fr 2fr 2fr 2fr 2fr; grid-gap: 0.5em; '>
+    {% for status in applicantlist  %}
+    <ul style='list-style-type: none; '>
+<li><a href ='{% url "applicantdetail" status.slug %}'> {{status.firstname}}  {{status.lastname}}</a></li>
+    </ul>
+{% endfor %}
+{% else %}
+<p><b> Sorry, you are permitted to be here. Back Off!!</b></p>
+{% endif %}
+
+{% endblock %}

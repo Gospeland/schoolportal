@@ -1,0 +1,32 @@
+{% extends 'baseportal.html' %}
+
+{% block content  %}
+{% if  request.user.is_student  %}
+
+<p><b> Congratulations  <a href ='{% url 'studentprofile' %} '>{{request.user}}</a>! Below is your result: </b></p>
+
+<div>
+    <table>
+  <tr>
+    <th> Course Name </th>
+    <th> Exam Score </th>
+  </tr>
+  
+    {% for score in studentexams %}
+    <tr>
+  
+    <td>{{score.course}}</td>
+    <td>{{score.scores}}</td>
+  </tr>
+  
+    {% endfor %}
+  </table>
+  </div>
+
+ <p><i> Note: Your results here are the official and final scores. However, 
+  if you have any issue with the results, contact the  <a href='{% url 'departments' %}'> Academic Department </a> for rectification
+ </i></p>
+ {% else %}
+  <p style='color: red; font-size: 1em; text-align: center;padding: 3em;'> <b> Back off! You are not permitted to be here!! </b></p>
+{% endif %}
+  {% endblock  %}

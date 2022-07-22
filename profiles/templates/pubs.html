@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style=' display: grid; grid-template-columns: 2.3fr 2.3fr 2.3fr; grid-gap: 0.5em;'>
+{% for post in posts %}
+<ul style='list-style-type: none;' >
+<li><img style='width: 200px; height: 200px; text-align: center;' src='{{post.image.url}}' /></li>
+<li> <a  href='{% url "details" post.slug  %}'> {{post.title}}</a></li>
+</ul>
+{% endfor %}
+</div>
+{% endblock %}

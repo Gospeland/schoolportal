@@ -1,0 +1,54 @@
+{% extends 'baseportal.html' %}
+
+{% block content  %}
+{% if  request.user.is_superuser or request.user.is_teacher  %}
+
+<ul style='list-style-type: none;'>
+    {% if staffdata %}
+{% for staffprof in staffdata  %}
+    <li style='float: right;'> <img src='{{staffprof.staff_image.url}}'  width='200px' height='200px'/> </li>
+    <li>Username: {{staffprof.nickname}}</li>
+    <li>Name: {{staffprof.nickname.first_name}} {{staffprof.nickname.last_name}} </li>
+    <li>Email: {{staffprof.nickname.email}}</li>
+    <li>Phone: {{staffprof.nickname.phone}}</li>
+    <li>State: {{staffprof.nickname.state}}</li>
+    <li>Department: {{staffprof.dept}}</li>
+    <li>Employment Date: {{staffprof.nickname.date_joined}}</li>
+    <li> <a href ="{% url 'updatestaffprofile' staffprof.pk %}" > Update  Profile </a> </li>
+   {% endfor %}
+
+   {%  else %}
+
+   <b> Sorry, You haven't updated your profile! <a href ="{% url 'createstaffprofile' %}" > Update  Profile </a> </b>
+</ul>
+{%  endif  %}
+
+{% if request.user.is_superuser %}
+<h3 style='color: darkblue; pading:0;'> All Employed Staffs Self-Submitted Info </h3>
+<div style ='display: grid; grid-gap: 0.3em;  grid-template-columns: 3fr 3fr 3fr;'  >
+    {% for staffprof in staffdata1  %}
+    <ul style='padding: 0.3em; list-style-type:none; background: darkblue; color: white;'   >
+    <li style='float: right;'> <img src='{{staffprof.staff_image.url}}'  width='80px' height='80px'/> </li>
+<li>Username: {{staffprof.nickname}}</li>
+<li>Name: {{staffprof.firstname}} {{staffprof.lastname}} </li>
+<li>Email: {{staffprof.email}}</li>
+<li>Phone: {{staffprof.phone}}</li>
+<li>State: {{staffprof.state}}</li>
+<li>Department: {{staffprof.dept}}</li>
+<li>Enrollment Date: {{staffprof.date_enrolled}}</li>
+<li> <a href ="{% url 'updatestaffprofile' staffprof.pk %}" > Update  Profile </a> </li>
+</ul>
+{% endfor %}
+
+</div>
+{% endif %}
+
+<ul>
+    {% for mycourse in mycourses %}
+    {{mycourse.title}}
+    
+    {% endfor %}
+    {% else %}
+    <p style='color: red; font-size: 1em; text-align: center;padding: 3em;'> <b> Back off! You are not permitted to be here!! </b></p>
+  {% endif %}
+{% endblock  %}

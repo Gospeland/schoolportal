@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content  %}
+
+<div class ='board' style=' color: white; background: darkblue; margin-top: 0.7em; padding: 0.5em; margin-bottom: 0.7em'>
+   <br>
+    <a style='margin: 1em; border: 1px solid black; padding: 0.5em; background: skyblue; color: darkblue' href ='{% url "home" %}'>  Go To Homepage </a>
+    <a  style='margin: 1em; border: 1px solid black; padding: 0.5em; background: skyblue; color: darkblue' href ='{% url "publist" %}'>  Go To All Publications </a>
+    <h3 style='padding: 0em; margin-top: 1em; '>{{pub.title}}|Posted by: {{pub.author}}</h3>
+     <p style='text-align: center;'><img style='width: 300px; height: 200px; text-align: center;' src='{{pub.image.url}}' /></p>
+     {{pub.description}}
+<br>
+{% if request.user.is_superuser %}
+<a href ='{% url "deletepub" pub.pk %}'>  Delete </a>
+<a href ='{% url "updatepub" pub.pk %}'>  Update </a>
+{% endif %}
+    </div>
+{% endblock  %}

@@ -1,0 +1,16 @@
+{% extends 'baseportal.html' %}
+
+{% block content %}
+
+{% if request.user.is_teacher or request.user.is_superuser %}
+<h3 style='text-align: center; color: darkblue'> Dashboard Options </h3>
+<ul  class='boarddash' style='display: grid; grid-template-columns: 2.5fr 2.5fr 2.5fr ; grid-gap: 0.5em; '>
+<li><a href ='{% url "staffprofile" %}'> Staff Profile </a> </li>
+<li><a href ='{% url "createstaffprofile" %}'> Create  Profile </a> </li>
+<li><a href ='{% url "newexamscores" %}'> Compile Results </a> </li>
+</ul>
+
+{% else %}
+<p style='color: red; font-size: 1em; text-align: center;padding: 3em;'> <b> Back off! You are not permitted to be here!! </b></p>
+{% endif %}
+{% endblock %}

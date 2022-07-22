@@ -1,0 +1,116 @@
+<head>
+    <style>
+        a { text-decoration: none; }
+        aa:hover {font-size: 120%;  }
+
+      table { font-size: 1em; border: 2px solid black; }
+      td { border: 2px solid black; text-align: center;padding: 0.2em; }
+
+        .cover { display: grid; grid-template-columns: 2fr 10fr; grid-gap: 1.3em;}
+
+        .board ul { list-style-type: square; pdding: 0.4em;}
+        
+
+        .navauthor { box-shadow: 2px 9px 8px grey; }
+        .navauthor li { display: inline;  padding: 0.4em; background: beige; margin: 0.1em;  text-align: center; border: 1px solid black;}
+        
+
+        
+        .nav { box-shadow: 2px 9px 8px darkblue; }
+.nav li {color: white;  background: darkblue; margin: 0.1em; text-align: center; border: 1px solid skyblue;}
+.nav li a { padding: 0.3em; display: block; color: white; }
+.nav li a:hover { background: skyblue; color: darkblue; font-size: 120%; }
+
+
+.navfooter {text-align: center; box-shadow: 2px 9px 8px darkblue; }
+.navfooter li {color: white;  padding: 0.6em; display: inline; background: darkblue; margin: 0.1em;  text-align: center; }
+.navfooter li a { padding: 0.3em; color: white; border: 1px solid skyblue; }
+.navfooter li a:hover { background: skyblue; color: darkblue; font-size: 120%; }
+
+
+.boarddash   {list-style-type: none; }
+.boarddash li { text-align: center; color: white;  margin-top: 1em; margin-bottom: 4em;}
+.boarddash li a { background: darkblue; padding: 2em; color: white; box-shadow: 2px 9px 8px black;}
+.boarddash li a:hover { background: skyblue; color: darkblue; }
+    </style>
+</head>
+<body style ='margin: 0em; padding: 0.1em; font-size: 1.3em;  background: skyblue;'   >
+    <header style= 'box-shadow: 2px 6px 5px grey;margin: 0em; padding-left: 1em; padding-right: 1em; padding-top: 0.5em; height: 8em; 
+    background: darkblue; color: white;'>
+    {% if   request.user.is_superuser or  request.user.is_authenticated %}
+    <ul class='nav' style='float: right; list-style-type: none;' >
+   <li> <a  style ='color: white; ' href = "#"> Welcome {{user}} </a></li>
+   <li><a  style ='color: white; ' href ='{% url "apply" %}'> Apply For Admission </a></li>
+    <li><a  style ='color: white; ' href ='{% url "portallogout" %}'> Logout </a></li>
+    </ul>
+
+{% else %} 
+    <ul class='nav' style='float: right; list-style-type: none;' >
+        <li> <a  style ='color: white; ' href = '{% url "portalregister" %}'>  Portal Register </a></li>
+         <li><a  style ='color: white; ' href ='{% url "portallogin" %}'>Portal Login </a></li>
+         <li><a  style ='color: white; ' href ='{% url "apply" %}'> Apply Now </a></li>
+         
+        </ul>
+    {% endif %}
+
+
+
+    {% for log in logo  %}
+    <img style="backgrond: skyblue; float: left; margin: 0.4em; width: 100px; height: 100px;" src ="{{log.image.url}}"  >
+{% endfor %}
+<h2 style='text-align: left'><a style='color: white;' href='{% url "home" %}'>HoneyLand Schools</a></h2>
+<p style='text-align: left'> <small> .....bringing out the best in the child </small></p>
+    </header>
+    
+<div class ='cover'>
+<nav >
+    <ul class ='nav' style =' padding:0;  list-style-type: none;'>
+        {% if request.user.is_student or request.user.is_superuser %}
+        <li><a href ='{% url "portal" %}'> Student Portal </a></li>
+        {% endif %}
+        {% if request.user.is_teacher or request.user.is_superuser %}
+        <li><a href ='{% url "portal" %}'> Staff Portal </a></li>
+        {% endif %}        
+        {% if request.user.is_teacher or request.user.is_superuser %}
+        <li><a href ='{% url "staffdashboard" %}'> Staff Dashboard </a></li>
+        {% endif %}
+{% if request.user.is_student or request.user.is_superuser %}
+        <li><a href ='{% url "studentdashboardlink" %}'> Student Dashboard </a></li>
+        {% endif %}
+        <li><a href ='{% url "home" %}'> Home </a></li>
+        <li> <a href ='{% url "levels" %}'> Levels </a> </li>
+        <li> <a href ='{% url "departments" %}'> Departments </a> </li>
+        <li><a href ='{% url "fields" %}'> Fields </a></li>
+        <li><a  style ='color: white; ' href ='{% url "admissionstat" %}'> Admission Status </a></li>
+    </nav>
+
+<section style='padding-right: 0.5em'>
+    
+{% block content %}
+
+{% endblock %}
+</section>
+</div>
+
+<footer style= 'box-shadow: 2px 6px 5px grey;margin: 0em; padding-left: 1em; padding-right: 1em; padding-top: 0.5em; height: 8em; 
+    background: darkblue; color: white;'>
+
+
+    <nav>
+        <ul class ='navfooter' style =' padding:0;  list-style-type: none;'>
+            {% if request.user.is_student or request.user.is_superuser  %}
+            <li><a href ='{% url "studentdashboardlink" %}'>  Portal </a></li>
+            {% endif %}
+    {% if request.user.is_teacher or request.user.is_superuser%}
+            <li><a href ='{% url "staffdashboard" %}'>  Portal </a></li>
+            {% endif %}
+            <li><a href ='{% url "home" %}'> Home </a></li>
+            <li> <a href ='{% url "levels" %}'> Levels </a> </li>
+            <li> <a href ='{% url "departments" %}'> Departments </a> </li>
+            <li><a href ='{% url "fields" %}'> Fields </a></li>
+            <li><a  style ='color: white; ' href ='{% url "admissionstat" %}'> Admission Status </a></li>
+
+    </nav>
+
+</footer>
+</body>

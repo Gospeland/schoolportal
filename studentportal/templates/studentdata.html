@@ -1,0 +1,56 @@
+{% extends 'baseportal.html' %}
+
+{% block content  %}
+<br>
+{% if  request.user.is_superuser  or request.user.is_student %}
+
+<ul style ='list-style-type: none;'>
+  {% if studentdata1 %}
+{% for studprof in studentdata1  %}
+
+<li style='float: right;'> <img src='{{studprof.student_image.url}}'  width='80px' height='80px'/> </li>
+<h3 style='color: darkblue'> Student Profile </h3>
+
+<li>Username: {{studprof.nickname}}</li>
+<li>Name: {{studprof.nickname.first_name}} {{studprof.nickname.last_name}} </li>
+<li>Email: {{studprof.nickname.email}}</li>
+<li>Phone: {{studprof.nickname.phone}}</li>
+<li>State: {{studprof.nickname.state}}</li>
+<li>Address: {{studprof.nickname.mailing_address}}</li>
+<li>Enrollment Date: {{studprof.date_enrolled}}</li>
+<li>Class: {{studprof.student_class}} ({{studprof.class_form}})</li>
+<li> <a href ="{% url 'updatestudentprofile' studprof.pk %}" > Update  Profile </a> </li>
+ {% endfor %}
+
+ <p style='font-size: medium; color: red;'>NOTICE:  You might see different values from what you filled in. Don't worry, your data is filled automatically from the school database </p>
+ {% else %}
+
+ <b>Oooops!!!!  Sorry, You haven't created your profile! <a style='color: white;' href ="{% url 'createstudentprofile' %}" > Create  Profile </a> </b>
+
+</ul>
+{% endif %}
+ {% if request.user.is_superuser %}
+<h3 style='color: darkblue'> All Enrolled Students Submitted Info </h3>
+<div style ='display: grid; grid-gap: 0.3em;  grid-template-columns: 3fr 3fr 3fr;'  >
+    {% for studprof in studentdata  %}
+    <ul style='padding: 0.3em; list-style-type:none; background: darkblue; color: white;'   >
+    <li style='float: right;'> <img src='{{studprof.student_image.url}}'  width='80px' height='80px'/> </li>
+<li>Username: {{studprof.nickname}}</li>
+<li>Name: {{studprof.firstname}} {{studprof.lastname}} </li>
+<li>Email: {{studprof.email}}</li>
+<li>Phone: {{studprof.phone}}</li>
+<li>State: {{studprof.state}}</li>
+<li>Class: {{studprof.student_class}} ({{studprof.class_form}})</li>
+<li>Enrollment Date: {{studprof.date_enrolled}}</li>
+<li> <a href ="{% url 'updatestudentprofile' studprof.pk %}" > Update  Profile </a> </li>
+</ul>
+{% endfor %}
+
+</div>
+{% endif %}
+
+
+{% else %}
+  <p style='color: red; font-size: 1em; text-align: center;padding: 3em;'> <b> Back off! You are not permitted to be here!! </b></p>
+{% endif %}
+{% endblock  %}

@@ -1,0 +1,16 @@
+{% extends 'baseportal.html' %}
+
+{% block content   %}
+<h3> Application Detail </h3>
+ {% if  request.user.is_superuser  %}
+<div >
+    <ul style='list-style-type: none; '>
+        <li><a href='{% url "userdetail" applicantsdetail.nickname.pk  %}'>Username: {{applicantsdetail.nickname}}</a></li>
+<li>Full Name: {{applicantsdetail.firstname}} {{applicantsdetail.middlename}} {{applicantsdetail.lastname}}</li>
+
+    </ul>
+{% else %}
+<p><b> Sorry, you are not permitted to be here. Back Off!!</b></p>
+{% endif %}
+
+{% endblock %}
